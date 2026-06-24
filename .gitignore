@@ -1,0 +1,86 @@
+## C-specific ignores
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Linker files
+*.ilk
+
+# Debugger Files
+*.pdb
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# debug information files
+*.dwo
+
+## Python-specific ignores
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+*.whl
+.venv/
+
+# Development tools
+.pytest_cache/
+.ruff_cache/
+.tox/
+.coverage
+htmlcov/
+cov.xml
+.mypy_cache/
+.vscode/
+.idea/
+
+# External dependencies
+external/
+
+# Temporary files
+*.tmp
+*.temp
+*~
+.DS_Store
+
+## Others
+/tmp
+/output
+
+_version.py
+
+# Doc site
+site
+
+# Security scan results
+semgrep-results.json

@@ -1,0 +1,179 @@
+[build-system]
+requires = [
+    "hatchling",
+    "hatch-vcs",
+]
+build-backend = "hatchling.build"
+
+[project]
+name = "ssl_py_platform"
+dynamic = ["version"]
+description = "Shared local-dev CLI for Swarm Systems Lab Python projects"
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "MIT" }
+authors = [
+    { name = "Jesus Bautista Villar", email = "jesbauti20@gmail.com" }
+]
+dependencies = []
+
+[project.scripts]
+ssl-py-platform = "ssl_py_platform.cli:main"
+
+# --- Optional dependencies for tooling ---
+[project.optional-dependencies]
+dev = [
+    "tox>=4.18",
+    "tox-uv>=1.9",
+    "ruff>=0.9.0",
+    "semgrep>=1.54.0",
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+    "pre-commit>=3.0",
+    "ty>=0.0.14",
+    "build>=1.2.2",
+    "twine>=5.1.1",
+]
+lint = [
+    "ruff>=0.9.0",
+    "semgrep>=1.54.0",
+]
+tests = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+]
+pre-commit = [
+    "pre-commit>=3.0",
+]
+type-checking = [
+    "ty>=0.0.14",
+]
+release = [
+    "build>=1.2.2",
+    "twine>=5.1.1",
+]
+
+# --- Hatch Configuration ---
+[tool.hatch.version]
+source = "vcs"
+
+[tool.hatch.version.raw-options]
+local_scheme = "no-local-version"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/ssl_py_platform"]
+artifacts = ["src/ssl_py_platform/scripts/*.sh"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src", "README.md", "LICENSE"]
+exclude = ["tests"]
+
+# --- Tool Configuration ---
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = [
+    "E", "F", "W", "I", "UP", "B", "A", "C4", "T20", "SIM", "RUF", "S",
+]
+ignore = [
+    "D100", "D104", "E501", "F403", "F401",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101", "S603"]
+"src/ssl_py_platform/cli.py" = ["T201", "S603", "S607"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+addopts = ["-v", "--tb=short", "--strict-markers"]
+
+[tool.coverage.run]
+source = ["src/ssl_py_platform"]
+omit = ["tests/*"]
+
+# Use uv for fast, reproducible environments
+[tool.tox]
+requires = ["tox-uv>=1.0"]
+env_list = [
+    "pre-commit",
+    "lint",
+    "security",
+    "tests",
+    "py312",
+    "py313",
+    "py314",
+    "build",
+]
+
+[tool.tox.env_run_base]
+passenv = ["*"]
+
+[tool.tox.env.pre-commit]
+description = "Run pre-commit hooks"
+extras = ["pre-commit"]
+commands = [
+    ["pre-commit", "run", "--all-files", "--show-diff-on-failure"],
+]
+
+[tool.tox.env.lint]
+description = "Run ruff linting and formatting"
+extras = ["lint"]
+commands = [
+    ["ruff", "check", "src", "tests"],
+    ["ruff", "format", "--check", "src", "tests"],
+]
+
+[tool.tox.env.security]
+description = "Run semgrep security scans"
+extras = ["lint"]
+commands = [
+    ["semgrep", "--config", "p/ci", "--config", ".semgrep.yml"],
+]
+
+[tool.tox.env.type-checking]
+description = "Run ty type checks"
+extras = ["type-checking"]
+commands = [
+    ["ty", "check"],
+]
+
+[tool.tox.env.tests]
+extras = ["tests"]
+commands = [
+    ["pytest", "--cov=ssl_py_platform", "--cov-report", "term", "--cov-report", "xml:cov.xml"],
+]
+
+[tool.tox.env.py312]
+base_python = ["python3.12"]
+extras = ["tests"]
+commands = [
+    ["pytest", "tests"],
+]
+
+[tool.tox.env.py313]
+base_python = ["python3.13"]
+extras = ["tests"]
+commands = [
+    ["pytest", "tests"],
+]
+
+[tool.tox.env.py314]
+base_python = ["python3.14"]
+extras = ["tests"]
+commands = [
+    ["pytest", "tests"],
+]
+
+[tool.tox.env.build]
+description = "Build sdist and wheel artifacts"
+extras = ["release"]
+commands = [
+    ["python", "-m", "build", "--sdist", "--wheel", "--outdir", "dist"],
+]

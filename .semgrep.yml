@@ -1,0 +1,41 @@
+rules:
+  - id: python.aws-access-key-id
+    patterns:
+      - pattern-regex: 'AKIA[0-9A-Z]{16}'
+    message: 'Possible AWS Access Key ID.'
+    severity: ERROR
+    languages:
+      - python
+
+  - id: possible-private-key
+    patterns:
+      - pattern: '-----BEGIN PRIVATE KEY-----'
+      - pattern: '-----BEGIN RSA PRIVATE KEY-----'
+    message: 'Potential private key in repository.'
+    severity: ERROR
+    languages:
+      - yaml
+      - python
+
+  - id: generic-api-key
+    patterns:
+      - pattern-regex: "(?i)(api[_-]?key|apikey)\\s*[:=]\\s*[\"']?([a-zA-Z0-9_-]{20,})[\"']?"
+    message: 'Potential API key assignment.'
+    severity: WARNING
+    languages:
+      - python
+      - yaml
+
+  - id: github-token
+    patterns:
+      - pattern-regex: 'ghp_[a-zA-Z0-9]{36}'
+    message: 'Potential GitHub personal access token.'
+    severity: ERROR
+    languages:
+      - python
+      - yaml
+
+exclude:
+  - path: tests/
+
+# Note: This file complements registry packs (p/ci). Tweak rules as needed to reduce false positives.
