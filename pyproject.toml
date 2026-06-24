@@ -6,7 +6,7 @@ requires = [
 build-backend = "hatchling.build"
 
 [project]
-name = "ssl_py_platform"
+name = "ssl_pydev"
 dynamic = ["version"]
 description = "Shared local-dev CLI for Swarm Systems Lab Python projects"
 readme = "README.md"
@@ -18,7 +18,7 @@ authors = [
 dependencies = []
 
 [project.scripts]
-ssl-py-platform = "ssl_py_platform.cli:main"
+ssl-pydev = "ssl_pydev.cli:main"
 
 # --- Optional dependencies for tooling ---
 [project.optional-dependencies]
@@ -61,8 +61,8 @@ source = "vcs"
 local_scheme = "no-local-version"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/ssl_py_platform"]
-artifacts = ["src/ssl_py_platform/scripts/*.sh"]
+packages = ["src/ssl_pydev"]
+artifacts = ["src/ssl_pydev/scripts/*.sh"]
 
 [tool.hatch.build.targets.sdist]
 include = ["src", "README.md", "LICENSE"]
@@ -83,7 +83,7 @@ ignore = [
 
 [tool.ruff.lint.per-file-ignores]
 "tests/**" = ["S101", "S603"]
-"src/ssl_py_platform/cli.py" = ["T201", "S603", "S607"]
+"src/ssl_pydev/cli.py" = ["T201", "S603", "S607"]
 
 [tool.ruff.format]
 quote-style = "double"
@@ -95,7 +95,7 @@ python_files = ["test_*.py"]
 addopts = ["-v", "--tb=short", "--strict-markers"]
 
 [tool.coverage.run]
-source = ["src/ssl_py_platform"]
+source = ["src/ssl_pydev"]
 omit = ["tests/*"]
 
 # Use uv for fast, reproducible environments
@@ -147,7 +147,7 @@ commands = [
 [tool.tox.env.tests]
 extras = ["tests"]
 commands = [
-    ["pytest", "--cov=ssl_py_platform", "--cov-report", "term", "--cov-report", "xml:cov.xml"],
+    ["pytest", "--cov=ssl_pydev", "--cov-report", "term", "--cov-report", "xml:cov.xml"],
 ]
 
 [tool.tox.env.py312]

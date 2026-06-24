@@ -1559,7 +1559,7 @@ wheels = [
 ]
 
 [[package]]
-name = "ssl-py-platform"
+name = "ssl-pydev"
 source = { editable = "." }
 
 [package.optional-dependencies]

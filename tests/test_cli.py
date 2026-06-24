@@ -1,6 +1,6 @@
 import pytest
 
-from ssl_py_platform.cli import SCRIPTS_MAP, _get_script
+from ssl_pydev.cli import SCRIPTS_MAP, _get_script
 
 
 def test_all_mapped_scripts_exist():

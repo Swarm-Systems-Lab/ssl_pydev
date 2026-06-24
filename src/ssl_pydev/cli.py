@@ -1,7 +1,7 @@
-"""ssl_py_platform CLI - shared local-dev commands for Swarm Systems Lab Python projects.
+"""ssl_pydev CLI - shared local-dev commands for Swarm Systems Lab Python projects.
 
 These wrap the same scripts ssl_ci's composite actions use in CI, packaged here so
-they can be installed once per machine (``uv tool install ssl-py-platform``) instead
+they can be installed once per machine (``uv tool install ssl-pydev``) instead
 of being copy-pasted into every project's scripts/ directory.
 """
 
@@ -21,11 +21,11 @@ SCRIPTS_MAP = {
 
 EPILOG = """
 Examples:
-  ssl-py-platform setup-env --extras dev,tests
-  ssl-py-platform build
-  ssl-py-platform build-native
-  ssl-py-platform publish-ci
-  ssl-py-platform validate-docs
+  ssl-pydev setup-env --extras dev,tests
+  ssl-pydev build
+  ssl-pydev build-native
+  ssl-pydev publish-ci
+  ssl-pydev validate-docs
 
 All commands accept additional arguments which are passed through to the
 underlying script. Commands run against the current working directory, so
@@ -38,7 +38,7 @@ def _get_script(command: str) -> str:
     if command not in SCRIPTS_MAP:
         raise ValueError(f"Unknown command: {command}")
 
-    script_ref = resources.files("ssl_py_platform.scripts").joinpath(SCRIPTS_MAP[command])
+    script_ref = resources.files("ssl_pydev.scripts").joinpath(SCRIPTS_MAP[command])
     if not script_ref.is_file():
         raise FileNotFoundError(f"Bundled script not found: {script_ref}")
     return str(script_ref)
@@ -60,7 +60,7 @@ def main() -> int:
     """Main CLI entry point."""
     if len(sys.argv) < 2 or sys.argv[1] in ["-h", "--help", "help"]:
         parser = argparse.ArgumentParser(
-            prog="ssl-py-platform",
+            prog="ssl-pydev",
             description="Swarm Systems Lab shared local-dev CLI",
             formatter_class=argparse.RawDescriptionHelpFormatter,
             epilog=EPILOG,

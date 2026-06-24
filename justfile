@@ -28,7 +28,7 @@ security:
 
 # Run type checks
 typecheck:
-    uv run ty check src/ssl_py_platform
+    uv run ty check src/ssl_pydev
 
 # Build sdist and wheel
 build:
@@ -36,11 +36,11 @@ build:
 
 # Publish with uv (requires UV_PUBLISH_* env vars)
 publish:
-    uv run ssl-py-platform publish
+    uv run ssl-pydev publish
 
 # Publish with twine (CI-friendly; requires TWINE_* env vars)
 publish-ci:
-    uv run ssl-py-platform publish-ci
+    uv run ssl-pydev publish-ci
 
 # Clean build artifacts
 clean:
