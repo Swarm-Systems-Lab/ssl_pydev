@@ -17,6 +17,7 @@ SCRIPTS_MAP = {
     "publish": "publish.sh",
     "publish-ci": "publish_ci.sh",
     "validate-docs": "validate_docs.sh",
+    "generate-stubs": "generate_stubs.sh",
 }
 
 EPILOG = """
@@ -26,6 +27,7 @@ Examples:
   ssl-pydev build-native
   ssl-pydev publish-ci
   ssl-pydev validate-docs
+  ssl-pydev generate-stubs --module mypkg._core --output src/
 
 All commands accept additional arguments which are passed through to the
 underlying script. Commands run against the current working directory, so

@@ -14,6 +14,14 @@ uv tool install ssl_pydev
 This installs a single `ssl-pydev` command, available from any project
 directory, independent of that project's own virtualenv/dependencies.
 
+> **Using VS Code installed via snap on Linux?** Run the command above from a
+> regular system terminal, **not** VS Code's integrated terminal. Snap
+> confinement redirects `$HOME`/`$XDG_DATA_HOME` for processes spawned inside
+> VS Code's snap, so `uv tool install` ends up putting `ssl-pydev` somewhere
+> only visible from inside that snap (e.g.
+> `~/snap/code/<rev>/.local/share/uv/tools/...`), invisible to any other
+> terminal.
+
 ## Usage
 
 ```bash
@@ -23,6 +31,7 @@ ssl-pydev build-native     # for compiled-extension (pybind11/scikit-build-core)
 ssl-pydev publish          # uv-based publish, requires UV_PUBLISH_* env vars
 ssl-pydev publish-ci       # twine-based publish, requires TWINE_* env vars
 ssl-pydev validate-docs
+ssl-pydev generate-stubs --module mypkg._core --output src/   # pybind11 type stubs
 ```
 
 Every command operates on the current working directory, so run it from the
