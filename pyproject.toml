@@ -27,7 +27,6 @@ dev = [
     "tox>=4.18",
     "tox-uv>=1.9",
     "ruff>=0.9.0",
-    "semgrep>=1.54.0",
     "pytest>=7.0",
     "pytest-cov>=4.0",
     "pre-commit>=3.0",
@@ -37,7 +36,6 @@ dev = [
 ]
 lint = [
     "ruff>=0.9.0",
-    "semgrep>=1.54.0",
 ]
 tests = [
     "pytest>=7.0",
@@ -63,7 +61,7 @@ local_scheme = "no-local-version"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/ssl_pydev"]
-artifacts = ["src/ssl_pydev/scripts/*.sh"]
+artifacts = ["src/ssl_pydev/scripts/*.sh", "src/ssl_pydev/scripts/*.yml"]
 
 [tool.hatch.build.targets.sdist]
 include = ["src", "README.md", "LICENSE"]
@@ -108,7 +106,6 @@ requires = ["tox-uv>=1.0"]
 env_list = [
     "pre-commit",
     "lint",
-    "security",
     "tests",
     "py312",
     "py313",
@@ -132,13 +129,6 @@ extras = ["lint"]
 commands = [
     ["ruff", "check", "src", "tests"],
     ["ruff", "format", "--check", "src", "tests"],
-]
-
-[tool.tox.env.security]
-description = "Run semgrep security scans"
-extras = ["lint"]
-commands = [
-    ["semgrep", "--config", "p/ci", "--config", ".semgrep.yml"],
 ]
 
 [tool.tox.env.type-checking]

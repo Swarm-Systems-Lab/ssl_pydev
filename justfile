@@ -24,7 +24,7 @@ lint:
 
 # Run security scans
 security:
-    uv run semgrep --config p/ci --config .semgrep.yml
+    uv run ssl-pydev security
 
 # Run type checks
 typecheck:
