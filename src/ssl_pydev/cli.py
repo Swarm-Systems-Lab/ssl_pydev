@@ -25,19 +25,31 @@ SCRIPTS_MAP = {
 
 EPILOG = """
 Examples:
-  ssl-pydev new my-project          # scaffold a new project from ssl_py_template
-  ssl-pydev act                     # test .github/workflows locally with act
-  ssl-pydev setup-env --extras dev,tests
-  ssl-pydev build
-  ssl-pydev build-native
-  ssl-pydev publish-ci
-  ssl-pydev validate-docs
-  ssl-pydev generate-stubs --module mypkg._core --output src/
-  ssl-pydev security
 
-All commands accept additional arguments which are passed through to the
-underlying script. Commands run against the current working directory, so
-invoke this from the root of the project you want to act on.
+  Scaffolding:
+    ssl-pydev new my-project                       Generate a new project from ssl_py_template
+
+  Environment & CI:
+    ssl-pydev setup-env --extras dev,tests         uv lock + sync (mirrors ssl_ci's env-setup action)
+    ssl-pydev act                                  Run .github/workflows locally with act
+
+  Build & publish:
+    ssl-pydev build                                Build sdist + wheel (pure-Python project)
+    ssl-pydev build-native                         Build sdist + cibuildwheel wheels (compiled extension)
+    ssl-pydev publish                              Publish with uv (requires UV_PUBLISH_* env vars)
+    ssl-pydev publish-ci                           Publish with twine (requires TWINE_* env vars)
+
+  Quality:
+    ssl-pydev security                             Run semgrep (p/ci pack + bundled rules + local .semgrep.yml)
+    ssl-pydev generate-stubs --module pkg._core --output src/
+                                                    Regenerate .pyi stubs for a native extension
+
+  Docs:
+    ssl-pydev validate-docs                        Sanity-check an already-built mkdocs site/ directory
+
+Every command runs against the current working directory - invoke this from
+the root of the project you want to act on. Extra arguments are passed
+through unchanged to the underlying script, e.g. `ssl-pydev security --verbose`.
 """
 
 
