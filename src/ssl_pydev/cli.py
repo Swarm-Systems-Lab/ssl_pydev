@@ -11,6 +11,8 @@ import sys
 from importlib import resources
 
 SCRIPTS_MAP = {
+    "new": "new.sh",
+    "act": "act.sh",
     "setup-env": "setup-env.sh",
     "build": "build.sh",
     "build-native": "build_native.sh",
@@ -22,6 +24,8 @@ SCRIPTS_MAP = {
 
 EPILOG = """
 Examples:
+  ssl-pydev new my-project          # scaffold a new project from ssl_py_template
+  ssl-pydev act                     # test .github/workflows locally with act
   ssl-pydev setup-env --extras dev,tests
   ssl-pydev build
   ssl-pydev build-native
