@@ -43,19 +43,6 @@ setup:
     ssl-pydev setup-env --extras dev,lint,tests,type-checking,pre-commit
 ```
 
-## Relationship to `ssl_ci`
-
-- `ssl_ci` holds the **GitHub Actions** side: reusable workflows and composite
-  actions that CI calls directly via `uses:`.
-- `ssl_pydev` (this repo) holds the **local-dev** side: the same logic,
-  installed once per developer machine via `uv tool install`.
-
-Today the two are maintained in parallel (the underlying `.sh` scripts started
-as copies of each other). Once this package has at least one published
-release, the plan is to update `ssl_ci`'s composite actions to install and
-call `ssl_pydev` themselves, so there's a single source of truth used by
-both CI and local dev.
-
 ## Versioning
 
 Released the same way as the other `Swarm-Systems-Lab` packages: tag `vX.Y.Z`,

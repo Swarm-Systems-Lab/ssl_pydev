@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
+unset VIRTUAL_ENV
 
 # Bootstraps a uv-managed virtualenv for the calling project.
 # Mirrors ssl_ci's actions/env-setup/setup-env.sh - this is the local-dev counterpart.

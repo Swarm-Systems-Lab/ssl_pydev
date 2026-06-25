@@ -2,6 +2,8 @@
 # Validate the documentation build output without rebuilding it.
 
 set -euo pipefail
+unset VIRTUAL_ENV
+
 IFS=$'\n\t'
 
 PROJECT_ROOT="$(pwd)"

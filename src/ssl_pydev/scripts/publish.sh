@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
+unset VIRTUAL_ENV
 
 # Local publish using uv's built-in publishing support.
 # SCRIPT_DIR: where this script is located (for finding setup-env.sh)

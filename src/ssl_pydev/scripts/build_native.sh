@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
+unset VIRTUAL_ENV
 
 # Build sdist + cibuildwheel wheels for a compiled-extension project.
 # Bootstraps the venv if needed.

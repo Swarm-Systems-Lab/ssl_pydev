@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
+unset VIRTUAL_ENV
 
 # Build sdist + wheel for a pure-Python project. Bootstraps the venv if needed.
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"

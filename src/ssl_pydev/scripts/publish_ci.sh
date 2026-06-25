@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
+unset VIRTUAL_ENV
 
 # CI-friendly publish using twine with credentials from the environment.
 # SCRIPT_DIR: where this script is located (for finding setup-env.sh)
