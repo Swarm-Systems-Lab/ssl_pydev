@@ -64,7 +64,7 @@ publish-ci:
 
 # Clean build artifacts
 clean:
-    rm -rf build dist *.egg-info .pytest_cache .ruff_cache __pycache__ .venv cov.xml .coverage .tox
+    rm -rf build dist *.egg-info .pytest_cache .ruff_cache __pycache__ .venv cov.xml .coverage .tox .mypy_cache .test_projects
 
 # ============================================================================
 # Composite Commands

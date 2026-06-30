@@ -6,12 +6,14 @@ of being copy-pasted into every project's scripts/ directory.
 """
 
 import argparse
+import importlib
 import subprocess
 import sys
 from importlib import resources
 
 SCRIPTS_MAP = {
     "new": "new.sh",
+    "new-sim": "new_sim.sh",
     "act": "act.sh",
     "setup-env": "setup-env.sh",
     "build": "build.sh",
@@ -23,11 +25,20 @@ SCRIPTS_MAP = {
     "security": "security.sh",
 }
 
+# Python-backed commands (need real logic - TOML/YAML parsing, etc. - rather
+# than a bundled bash script). Value is "module:function".
+PY_COMMANDS = {
+    "prune": "ssl_pydev.prune:main",
+}
+
 EPILOG = """
 Examples:
 
   Scaffolding:
     ssl-pydev new my-project                       Generate a new project from ssl_py_template
+    ssl-pydev new-sim my-project                    Generate a new ssl_simulator research project
+                                                    (ssl_py_template with project_kind=simulator)
+    ssl-pydev prune                                 Find and interactively remove files orphaned by a template update
 
   Environment & CI:
     ssl-pydev setup-env --extras dev,tests         uv lock + sync (mirrors ssl_ci's env-setup action)
@@ -76,8 +87,18 @@ def _run_script(command: str, args: list) -> int:
     return result.returncode
 
 
+def _run_py_command(command: str, args: list) -> int:
+    """Import and call a Python-backed command's entry point."""
+    module_name, func_name = PY_COMMANDS[command].split(":")
+    module = importlib.import_module(module_name)
+    func = getattr(module, func_name)
+    return func(args)
+
+
 def main() -> int:
     """Main CLI entry point."""
+    all_commands = sorted({*SCRIPTS_MAP.keys(), *PY_COMMANDS.keys()})
+
     if len(sys.argv) < 2 or sys.argv[1] in ["-h", "--help", "help"]:
         parser = argparse.ArgumentParser(
             prog="ssl-pydev",
@@ -86,20 +107,23 @@ def main() -> int:
             epilog=EPILOG,
         )
         subparsers = parser.add_subparsers(dest="command", help="Available commands")
-        for cmd in sorted(SCRIPTS_MAP.keys()):
+        for cmd in all_commands:
             subparsers.add_parser(cmd, help=f"Run {cmd}")
         parser.print_help()
         return 0
 
     command = sys.argv[1]
-    script_args = sys.argv[2:]
+    command_args = sys.argv[2:]
+
+    if command in PY_COMMANDS:
+        return _run_py_command(command, command_args)
 
     if command not in SCRIPTS_MAP:
         print(f"Error: Unknown command '{command}'", file=sys.stderr)
-        print(f"Available commands: {', '.join(sorted(SCRIPTS_MAP.keys()))}", file=sys.stderr)
+        print(f"Available commands: {', '.join(all_commands)}", file=sys.stderr)
         return 1
 
-    return _run_script(command, script_args)
+    return _run_script(command, command_args)
 
 
 if __name__ == "__main__":

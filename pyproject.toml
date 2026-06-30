@@ -16,7 +16,9 @@ authors = [
     { name = "Jesus Bautista Villar", email = "jesbauti20@gmail.com" },
     { name = "Jose Hinojosa Hidalgo"}
 ]
-dependencies = []
+dependencies = [
+    "pyyaml>=6.0",
+]
 
 [project.scripts]
 ssl-pydev = "ssl_pydev.cli:main"
@@ -82,7 +84,7 @@ ignore = [
 
 [tool.ruff.lint.per-file-ignores]
 "tests/**" = ["S101", "S603", "S607"]
-"src/ssl_pydev/cli.py" = ["T201", "S603", "S607"]
+"src/ssl_pydev/*.py" = ["T201", "S603", "S607"]
 
 [tool.ruff.format]
 quote-style = "double"
