@@ -30,7 +30,7 @@ ssl-pydev validate-docs
 ssl-pydev generate-stubs --module mypkg._core --output src/   # pybind11 type stubs
 ```
 
-Every command operates on the current working directory, so run it from the root of the project you want to act on. 
+Every command operates on the current working directory, so run it from the root of the project you want to act on.
 
 A project's `justfile` recipes become one-liners, e.g.:
 
